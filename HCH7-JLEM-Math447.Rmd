@@ -1,0 +1,36 @@
+---
+title: 'Chapter 7(Eighth Edition): 7.1, 7.2, 7.13, 7.24, 7.25'
+author: "Jeremy Ling & Emmanuel Mejia"
+date: "May 1, 2018"
+output: pdf_document
+---
+
+##7.1
+
+\textbf{Consider the experiment described in Problem 6.1.
+Analyze this experiment assuming that each replicate represents
+a block of a single production shift.}
+
+##7.2
+
+\textbf{Consider the experiment described in Problem 6.5.
+Analyze this experiment assuming that each one of the four
+replicates represents a block.}
+
+##7.13
+
+\textbf{Using the data from the $2^4$ design in Problem 6.22,
+construct and analyze a design in two blocks with ABCD confounded
+with blocks.}
+
+##7.24
+
+\textbf{Suppose that in Problem 6.1 we had confounded ABC
+in replicate I, AB in replicate II, and BC in replicate III.
+Calculate the factor effect estimates. Construct the analysis of
+variance table.}
+
+##7.25
+
+\textbf{Repeat the analysis of Problem 6.1 assuming that
+ABC was confounded with blocks in each replicate.}
