@@ -29,16 +29,43 @@ yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,4
 cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
 
 cutting.aov = aov(yield~Rep+factorA*factorB*factorC, cutting.speed.long)
-summary(cutting.aov)
+cutting.aov.og = aov(yield~factorA*factorB*factorC, cutting.speed.long)
+summary(cutting.aov); summary(cutting.aov.og)
 ```
 
-
+We look at the analysis of variance we see that the block effect is insignificant because the p-value is small, but effect B, C, and AC are significant. We also make a comparison to the analysis of Variance without the blocking to see if there was a difference. In this case there is no difference at the coefficients of our effects.
 
 ##7.2
 
 \textbf{Consider the experiment described in Problem 6.5.
 Analyze this experiment assuming that each one of the four
 replicates represents a block.}
+
+```{r}
+# creating data table
+A <- rep(c("-","+","-","+"), times = 4)
+B <- rep(c("-","-","+","+"), times = 4)
+Rep <- rep(c("I","II","III","IV"), each = 4)
+Vibes <- c(18.2, 27.2, 15.9, 41.0, 18.9, 24.0, 14.5, 43.9, 12.9, 22.4, 15.1, 36.3, 14.4, 22.5, 14.2, 39.9)
+router.long <- data.frame(A, B, Rep, Vibes)
+
+for (j in 1:2)
+  router.long[, j]=as.numeric(coded(router.long[, j]))
+
+# defining coded
+coded=function(x) #a function to code variable x
+{
+  ifelse(x=="+", 1, -1)
+}
+
+#######
+router.long$Block=router.long$A * router.long$B
+router.lm = lm(Vibes ~ Block + A * B, router.long)
+router.lm.og = lm(Vibes ~ A * B, router.long)
+summary(router.lm); summary(router.lm.og)
+```
+
+After we analyze our variance we see that all main effects are significant including the Blocking effect. We see that there is no difference between coefficients, F-statistic of the model, $R^2$, and adjusted $R^2$. Which means blocking the replicates gives us a good model. 
 
 ##7.13
 
