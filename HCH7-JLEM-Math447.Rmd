@@ -28,8 +28,11 @@ yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,4
 #dataframe
 cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
 
-cutting.lm = summary(lm(yield ~ Rep + factorA * factorB * factorC, cutting.speed.long)); cutting.lm
+cutting.aov = aov(yield~Rep+factorA*factorB*factorC, cutting.speed.long)
+summary(cutting.aov)
 ```
+
+
 
 ##7.2
 
