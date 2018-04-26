@@ -11,6 +11,26 @@ output: pdf_document
 Analyze this experiment assuming that each replicate represents
 a block of a single production shift.}
 
+```{r}
+# defining coded
+coded=function(x) #a function to code variable x
+{
+  ifelse(x=="+", 1, -1)
+}
+
+# creating data table
+factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
+factorB = rep(c("-","-","+","+","-","-","+","+"), times = 3)
+factorC = rep(c("-","-","-","-","+","+","+","+"), times = 3)
+Rep = rep(c("I", "II", "III"), each = 8)
+yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
+
+#dataframe
+cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
+
+cutting.lm = summary(lm(yield ~ Rep + factorA * factorB * factorC, cutting.speed.long)); cutting.lm
+```
+
 ##7.2
 
 \textbf{Consider the experiment described in Problem 6.5.
