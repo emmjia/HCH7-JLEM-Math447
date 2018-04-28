@@ -1,5 +1,5 @@
 ---
-title: 'Chapter 7(Eighth Edition): 7.1, 7.2, 7.13, 7.24, 7.25'
+title: 'Chapter 7(Eighth Edition): 7.1, 7.2, 7.4, 7.13, 7.24, 7.25'
 author: "Jeremy Ling & Emmanuel Mejia"
 date: "May 1, 2018"
 output: pdf_document
@@ -67,11 +67,45 @@ summary(router.lm); summary(router.lm.og)
 
 After we analyze our variance we see that all main effects are significant including the Blocking effect. We see that there is no difference between coefficients, F-statistic of the model, $R^2$, and adjusted $R^2$. Which means blocking the replicates gives us a good model. 
 
+##7.4
+
+\textbf{Consider the data from the first replicate of Problem
+6.1. Suppose that these observations could not all be run using
+the same bar stock. Set up a design to run these observations
+in two blocks of four observations each with ABC confounded.
+Analyze the data.}
+
 ##7.13
 
 \textbf{Using the data from the $2^4$ design in Problem 6.22,
 construct and analyze a design in two blocks with ABCD confounded
 with blocks.}
+
+```{r}
+Standard.Order = c(8,10,12,9,7,15,2,6,16,13,5,14,1,3,4,11)
+Run.Order = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+A = Laser.Power = c(1,1,1,-1,-1,-1,1,1,1,-1,-1,1,-1,-1,1,-1)
+B = Pulse.Freq = c(1,-1,1,-1,1,1,-1,-1,1,-1,-1,-1,-1,1,1,1)
+C = Cell.Size = c(1,-1,-1,-1,1,1,-1,1,1,1,1,1,-1,-1,-1,-1)
+D = Writing.Speed = c(-1,1,1,1,-1,1,-1,-1,1,1,-1,1,-1,-1,-1,1)
+UEC = c(0.8,0.81,0.79,0.6,0.65,0.55,0.98,0.67,0.69,0.56,0.63,0.65,0.75,0.72,0.98,0.63)
+error = data.frame(Standard.Order,Run.Order,A,B,C,D,UEC)
+# defining coded
+coded=function(x) #a function to code variable x
+{
+  ifelse(x=="+", 1, -1)
+}
+
+for (j in 1:4)
+  error[, j]=as.numeric(coded(error[, j]))
+#Blocking#
+error$Block=error$A * error$B *error$C * error$D
+#Linear Model#
+error.lm = lm(UEC ~ Block + coded(A)*coded(B)*coded(C)*coded(D), error)#blocking
+error.lm.og = lm(UEC ~ coded(A)*coded(B)*coded(C)*coded(D), error)#regular
+
+summary(error.lm); summary(error.lm.og)
+```
 
 ##7.24
 
