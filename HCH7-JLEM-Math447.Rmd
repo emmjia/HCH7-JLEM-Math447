@@ -49,14 +49,15 @@ Rep <- rep(c("I","II","III","IV"), each = 4)
 Vibes <- c(18.2, 27.2, 15.9, 41.0, 18.9, 24.0, 14.5, 43.9, 12.9, 22.4, 15.1, 36.3, 14.4, 22.5, 14.2, 39.9)
 router.long <- data.frame(A, B, Rep, Vibes)
 
-for (j in 1:2)
-  router.long[, j]=as.numeric(coded(router.long[, j]))
-
 # defining coded
 coded=function(x) #a function to code variable x
 {
   ifelse(x=="+", 1, -1)
 }
+
+# coding A and B
+for (j in 1:2)
+  router.long[, j]=as.numeric(coded(router.long[, j]))
 
 #######
 router.long$Block=router.long$A * router.long$B
@@ -90,19 +91,12 @@ C = Cell.Size = c(1,-1,-1,-1,1,1,-1,1,1,1,1,1,-1,-1,-1,-1)
 D = Writing.Speed = c(-1,1,1,1,-1,1,-1,-1,1,1,-1,1,-1,-1,-1,1)
 UEC = c(0.8,0.81,0.79,0.6,0.65,0.55,0.98,0.67,0.69,0.56,0.63,0.65,0.75,0.72,0.98,0.63)
 error = data.frame(Standard.Order,Run.Order,A,B,C,D,UEC)
-# defining coded
-coded=function(x) #a function to code variable x
-{
-  ifelse(x=="+", 1, -1)
-}
 
-for (j in 1:4)
-  error[, j]=as.numeric(coded(error[, j]))
 #Blocking#
-error$Block=error$A * error$B *error$C * error$D
+error$Block=error$A * error$B * error$C * error$D
 #Linear Model#
-error.lm = lm(UEC ~ Block + coded(A)*coded(B)*coded(C)*coded(D), error)#blocking
-error.lm.og = lm(UEC ~ coded(A)*coded(B)*coded(C)*coded(D), error)#regular
+error.lm = lm(UEC ~ Block + A*B*C*D, error)#blocking
+error.lm.og = lm(UEC ~ A*B*C*D, error)#regular
 
 summary(error.lm); summary(error.lm.og)
 ```
