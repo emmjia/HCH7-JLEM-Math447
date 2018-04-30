@@ -5,7 +5,7 @@ date: "May 1, 2018"
 output: pdf_document
 ---
 
-```{r}
+```{r,  warning=FALSE, message=FALSE}
 library(car)
 library("gplots")
 ```
@@ -58,14 +58,15 @@ Rep <- rep(c("I","II","III","IV"), each = 4)
 Vibes <- c(18.2, 27.2, 15.9, 41.0, 18.9, 24.0, 14.5, 43.9, 12.9, 22.4, 15.1, 36.3, 14.4, 22.5, 14.2, 39.9)
 router.long <- data.frame(A, B, Rep, Vibes)
 
-for (j in 1:2)
-  router.long[, j]=as.numeric(coded(router.long[, j]))
-
 # defining coded
 coded=function(x) #a function to code variable x
 {
   ifelse(x=="+", 1, -1)
 }
+
+# coding A and B
+for (j in 1:2)
+  router.long[, j]=as.numeric(coded(router.long[, j]))
 
 #######
 #router.long$Block=router.long$A * router.long$B
@@ -88,7 +89,7 @@ the same bar stock. Set up a design to run these observations
 in two blocks of four observations each with ABC confounded.
 Analyze the data.}
 
-```{r}
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 # creating data table
 A = rep(c("-","+","-","+","-","+","-","+"), times = 1)
 B = rep(c("-","-","+","+","-","-","+","+"), times = 1)
@@ -143,7 +144,7 @@ We begin by Blocing our main effects and we take a look at the coefficients of o
 construct and analyze a design in two blocks with ABCD confounded
 with blocks.}
 
-```{r}
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 Standard.Order = c(8,10,12,9,7,15,2,6,16,13,5,14,1,3,4,11)
 Run.Order = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 A = Laser.Power = c(1,1,1,-1,-1,-1,1,1,1,-1,-1,1,-1,-1,1,-1)
@@ -156,8 +157,8 @@ error = data.frame(Standard.Order,Run.Order,A,B,C,D,UEC)
 #Blocking#
 error$Block=error$A * error$B * error$C * error$D
 #Linear Model#
-error.lm = lm(UEC ~ Block + (A)*(B)*(C)*(D), error)#blocking
-error.lm.og = lm(UEC ~ (A)*(B)*(C)*(D), error)#regular
+error.lm = lm(UEC ~ Block + A*B*C*D, error)#blocking
+error.lm.og = lm(UEC ~ A*B*C*D, error)#regular
 summary(error.lm); summary(error.lm.og)
 
 #Residual Analysis
