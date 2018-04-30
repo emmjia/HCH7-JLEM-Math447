@@ -5,7 +5,7 @@ date: "May 1, 2018"
 output: pdf_document
 ---
 
-```{r}
+```{r,  warning=FALSE, message=FALSE}
 library(car)
 library("gplots")
 ```
@@ -89,7 +89,7 @@ the same bar stock. Set up a design to run these observations
 in two blocks of four observations each with ABC confounded.
 Analyze the data.}
 
-```{r}
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 # creating data table
 A = rep(c("-","+","-","+","-","+","-","+"), times = 1)
 B = rep(c("-","-","+","+","-","-","+","+"), times = 1)
@@ -144,7 +144,7 @@ We begin by Blocing our main effects and we take a look at the coefficients of o
 construct and analyze a design in two blocks with ABCD confounded
 with blocks.}
 
-```{r}
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 Standard.Order = c(8,10,12,9,7,15,2,6,16,13,5,14,1,3,4,11)
 Run.Order = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 A = Laser.Power = c(1,1,1,-1,-1,-1,1,1,1,-1,-1,1,-1,-1,1,-1)
