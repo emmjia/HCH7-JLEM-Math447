@@ -76,6 +76,24 @@ the same bar stock. Set up a design to run these observations
 in two blocks of four observations each with ABC confounded.
 Analyze the data.}
 
+```{r}
+# creating data table
+factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
+factorB = rep(c("-","-","+","+","-","-","+","+"), times = 3)
+factorC = rep(c("-","-","-","-","+","+","+","+"), times = 3)
+Rep = rep(c("I", "II", "III"), each = 8)
+yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
+
+cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
+
+# defining coded
+coded=function(x) #a function to code variable x
+{
+  ifelse(x=="+", 1, -1)
+}
+```
+
+
 ##7.13
 
 \textbf{Using the data from the $2^4$ design in Problem 6.22,
@@ -108,7 +126,85 @@ in replicate I, AB in replicate II, and BC in replicate III.
 Calculate the factor effect estimates. Construct the analysis of
 variance table.}
 
+```{r}
+# creating data table
+factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
+factorB = rep(c("-","-","+","+","-","-","+","+"), times = 3)
+factorC = rep(c("-","-","-","-","+","+","+","+"), times = 3)
+Rep = rep(c("I", "II", "III"), each = 8)
+yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
+
+cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
+
+# defining coded
+coded=function(x) #a function to code variable x
+{
+  ifelse(x=="+", 1, -1)
+}
+
+# subsetting Rep I
+cutting.speed.long1 <- cutting.speed.long[cutting.speed.long$Rep == "I",]
+
+A <- coded(cutting.speed.long1$factorA)
+B <- coded(cutting.speed.long1$factorB)
+C <- coded(cutting.speed.long1$factorC)
+
+cutting.speed.long1$Block <- ifelse(A * B * C > 0, 1, 2)
+cutting.speed.long1 <- cutting.speed.long1[order(cutting.speed.long1$Block),]
+
+# subsetting Rep II
+cutting.speed.long2 <- cutting.speed.long[cutting.speed.long$Rep == "II",]
+
+A <- coded(cutting.speed.long2$factorA)
+B <- coded(cutting.speed.long2$factorB)
+C <- coded(cutting.speed.long2$factorC)
+
+cutting.speed.long2$Block <- ifelse(A * B > 0, 1, 2)
+cutting.speed.long2 <- cutting.speed.long2[order(cutting.speed.long2$Block),]
+
+# subsetting Rep III
+cutting.speed.long3 <- cutting.speed.long[cutting.speed.long$Rep == "III",]
+
+A <- coded(cutting.speed.long3$factorA)
+B <- coded(cutting.speed.long3$factorB)
+C <- coded(cutting.speed.long3$factorC)
+
+cutting.speed.long3$Block <- ifelse(B * C > 0, 1, 2)
+cutting.speed.long3 <- cutting.speed.long3[order(cutting.speed.long3$Block),]
+
+# creating new data table
+p.confound <- rbind(cutting.speed.long1, cutting.speed.long2, cutting.speed.long3)
+p.confound$Rep <- factor(p.confound$Rep)
+p.confound$Blocks <- factor(paste(p.confound$Rep, p.confound$Block,
+                                  sep = "-"))
+
+# running regression
+p.confound.aov <- aov(yield ~ Blocks + factorA * factorB * factorC, p.confound)
+summary(p.confound.aov)
+
+p.confound.lm <- aov(yield ~ Blocks + coded(factorA) * coded(factorB) * coded(factorC), p.confound)
+summary(p.confound.lm)
+```
+
+
 ##7.25
 
 \textbf{Repeat the analysis of Problem 6.1 assuming that
 ABC was confounded with blocks in each replicate.}
+
+```{r}
+# creating data table
+factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
+factorB = rep(c("-","-","+","+","-","-","+","+"), times = 3)
+factorC = rep(c("-","-","-","-","+","+","+","+"), times = 3)
+Rep = rep(c("I", "II", "III"), each = 8)
+yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
+
+cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
+
+# defining coded
+coded=function(x) #a function to code variable x
+{
+  ifelse(x=="+", 1, -1)
+}
+```
