@@ -307,6 +307,15 @@ cutting.confoundedabc.lm = lm(yield ~ Blocks + A * B * C, partialConfounding.abc
 res=partialConfounding.abc$yield-fitted(cutting.confoundedabc.lm)
 qqPlot(res)
 plot(fitted(cutting.confoundedabc.lm), res)#Good Model
-```
 
-Partially confounding is identical to fully confounding when using both methods.  the anova for partially confounding and checking the residuals we have a good model
+# test stuff
+partialConfounding.abc$A <-coded(partialConfounding.abc$A)
+partialConfounding.abc$B <-coded(partialConfounding.abc$B)
+partialConfounding.abc$C <-coded(partialConfounding.abc$C)
+
+partialConfounding.abc$Block2 <- ifelse(partialConfounding.abc$A * partialConfounding.abc$B * partialConfounding.abc$C < 0, 1, 2)
+summary(aov(yield ~ Block + A * B * C, partialConfounding.abc))
+
+partialConfounding.abc$Block == partialConfounding.abc$Block2
+```
+Partially confounding is identical to completely confounding when using both methods. We compare the results of the blocking for both partially and completely confounding. For the partially confounded data we check the anova and residuals, we have a good model.
