@@ -5,6 +5,11 @@ date: "May 1, 2018"
 output: pdf_document
 ---
 
+```{r,  warning=FALSE, message=FALSE}
+library(car)
+library("gplots")
+```
+
 ##7.1
 
 \textbf{Consider the experiment described in Problem 6.1.
@@ -31,6 +36,10 @@ cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
 cutting.aov = aov(yield~Rep+factorA*factorB*factorC, cutting.speed.long)
 cutting.aov.og = aov(yield~factorA*factorB*factorC, cutting.speed.long)
 summary(cutting.aov); summary(cutting.aov.og)
+
+cutting.lm = lm(yield~Rep+factorA*factorB*factorC, cutting.speed.long)
+cutting.lm.og = lm(yield~factorA*factorB*factorC, cutting.speed.long)
+summary(cutting.lm); summary(cutting.lm.og)
 ```
 
 We look at the analysis of variance we see that the block effect is insignificant because the p-value is small, but effect B, C, and AC are significant. We also make a comparison to the analysis of Variance without the blocking to see if there was a difference. In this case there is no difference at the coefficients of our effects.
@@ -60,13 +69,17 @@ for (j in 1:2)
   router.long[, j]=as.numeric(coded(router.long[, j]))
 
 #######
-router.long$Block=router.long$A * router.long$B
-router.lm = lm(Vibes ~ Block + A * B, router.long)
-router.lm.og = lm(Vibes ~ A * B, router.long)
-summary(router.lm); summary(router.lm.og)
+#router.long$Block=router.long$A * router.long$B
+#router.lm = lm(Vibes ~ Block + A * B, router.long)
+#router.lm.og = lm(Vibes ~ A * B, router.long)
+#summary(router.lm); summary(router.lm.og)
+
+router.aov = aov(Vibes ~ Rep + A * B, router.long)
+router.aov.og = aov(Vibes ~ A * B, router.long)
+summary(router.aov); summary(router.aov.og)
 ```
 
-After we analyze our variance we see that all main effects are significant including the Blocking effect. We see that there is no difference between coefficients, F-statistic of the model, $R^2$, and adjusted $R^2$. Which means blocking the replicates gives us a good model. 
+After we analyze our variance we see that all main effects are significant including the Blocking effect because all p-values are small. Blocking the replicates will create a better model for our experiment. 
 
 ##7.4
 
@@ -76,6 +89,7 @@ the same bar stock. Set up a design to run these observations
 in two blocks of four observations each with ABC confounded.
 Analyze the data.}
 
+<<<<<<< HEAD
 ```{r}
 # creating data table
 factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
@@ -85,14 +99,61 @@ Rep = rep(c("I", "II", "III"), each = 8)
 yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
 
 cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
+=======
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
+# creating data table
+A = rep(c("-","+","-","+","-","+","-","+"), times = 1)
+B = rep(c("-","-","+","+","-","-","+","+"), times = 1)
+C = rep(c("-","-","-","-","+","+","+","+"), times = 1)
+Rep = rep(c("I"))
+yield = c(22,32,35,55,44,40,60,39)
+
+cutting.speed.short = data.frame(A, B, C, Rep, yield)
+>>>>>>> fb351768fbe95f6bdf6c42fd5024e4262cac5c48
 
 # defining coded
 coded=function(x) #a function to code variable x
 {
   ifelse(x=="+", 1, -1)
 }
+<<<<<<< HEAD
 ```
 
+=======
+
+for (j in 1:3)
+  cutting.speed.short[, j]=as.numeric(coded(cutting.speed.short[, j]))
+
+cutting.speed.short$Block = cutting.speed.short$A * cutting.speed.short$B * cutting.speed.short$C
+
+cutting.lm_7.4 = lm(yield ~ Block + A * B  * C, cutting.speed.short)#blocking
+cutting.lm_7.4.og = lm(yield ~ A * B  * C, cutting.speed.short)#original
+summary(cutting.lm_7.4); summary(cutting.lm_7.4.og)#comparing coefficients
+
+#residual analysis
+res=cutting.speed.short$yield-fitted(cutting.lm_7.4)
+qqPlot(res)
+plot(fitted(cutting.lm_7.4), res)#bad model
+
+#Reduced Model using probability plot
+qqnorm(aov(yield ~ Block + A*B*C, cutting.speed.short), full=T,label=T)
+coef=cutting.lm_7.4$coefficients[-1]
+variables=names(coef)
+plot=qqnorm(coef)
+variables[identify(plot)]# B C AC
+
+#New model
+cutting.lm_7.4_Re = lm(yield ~ Block + A + B + C + A*C, cutting.speed.short)
+summary(cutting.lm_7.4_Re)
+
+#New Model Residual Analysis
+res=cutting.speed.short$yield-fitted(cutting.lm_7.4_Re)
+qqPlot(res)
+plot(fitted(cutting.lm_7.4_Re), res) #better model
+```
+
+We begin by Blocing our main effects and we take a look at the coefficients of our model that includes blocking and the model that excludes blocking. Notice all coefficients are similar. To check if the model that includes the blocked data is a good model we quickly do a residual analysis and realize that our residuals are trending to a straight line, we do not have a good model, we must reduce it. Using the same method from chapter six, the probability plot, we have chosen main effects B, C, and interaction effects AC to be important effects. We apply this to a new model and check the residuals, no pattern and normality is well. The model with the Block Design data and main effects B, C, and interaction effect AC is a good model. 
+>>>>>>> fb351768fbe95f6bdf6c42fd5024e4262cac5c48
 
 ##7.13
 
@@ -100,7 +161,7 @@ coded=function(x) #a function to code variable x
 construct and analyze a design in two blocks with ABCD confounded
 with blocks.}
 
-```{r}
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 Standard.Order = c(8,10,12,9,7,15,2,6,16,13,5,14,1,3,4,11)
 Run.Order = c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 A = Laser.Power = c(1,1,1,-1,-1,-1,1,1,1,-1,-1,1,-1,-1,1,-1)
@@ -115,9 +176,31 @@ error$Block=error$A * error$B * error$C * error$D
 #Linear Model#
 error.lm = lm(UEC ~ Block + A*B*C*D, error)#blocking
 error.lm.og = lm(UEC ~ A*B*C*D, error)#regular
-
 summary(error.lm); summary(error.lm.og)
+
+#Residual Analysis
+res=error$UEC-fitted(error.lm)
+qqPlot(res)
+plot(fitted(error.lm), res)#Bad Model
+
+#Reduced Model Procedure
+qqnorm(aov(UEC ~ Block + A*B*C*D, error), full=T,label=T)
+coef=error.lm$coefficients[-1]
+variables=names(coef)
+plot=qqnorm(coef)
+variables[identify(plot)]# A C D
+
+#New Model
+error.lm.new = lm(UEC ~ Block + A + C + D, error)
+summary(error.lm.new)
+
+#Residual Analysis on New Model
+res=error$UEC-fitted(error.lm.new)
+qqPlot(res)
+plot(fitted(error.lm.new), res)#Better Model
 ```
+
+We design our data into two blocks with the confounded effects ABCD. We construct two linear models one with and the other without the Block variable. To our results we notice both models share the same coefficients. We check the residual for the Block model to see if it is a good model, unfortunately it is not, we must reduce it. We use the probability plot method to pick out which main effects are important, our results were A, C, and D. Now we apply that to a new model with the Block design and check the residuals. From our residual analysis from out new model we can state that we have a good model with main effects A, C, and D in a block design.
 
 ##7.24
 
