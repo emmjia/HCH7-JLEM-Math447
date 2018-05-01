@@ -45,6 +45,9 @@ partialConfounding.abc$Blocks=factor(paste(partialConfounding.abc$Rep,
 cutting.confoundedabc.aov = aov(yield ~ Blocks + A * B * C, partialConfounding.abc)
 summary(cutting.confoundedabc.aov)
 
+#Regular
+cutting.regular.aov = aov(yield ~  A*B*C, cutting.speed.long); summary(cutting.regular.aov)
+cutting.regular.lm = lm(yield ~ A*B*C, cutting.)
 #Residual Analysis for cutting.confounded.aov
 cutting.confoundedabc.lm = lm(yield ~ Blocks + A * B * C, partialConfounding.abc)
 res=partialConfounding.abc$yield-fitted(cutting.confoundedabc.lm)
