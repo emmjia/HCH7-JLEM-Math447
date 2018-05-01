@@ -90,6 +90,7 @@ in two blocks of four observations each with ABC confounded.
 Analyze the data.}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```{r}
 # creating data table
 factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
@@ -100,6 +101,8 @@ yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,4
 
 cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
 =======
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 ```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 # creating data table
 A = rep(c("-","+","-","+","-","+","-","+"), times = 1)
@@ -109,7 +112,10 @@ Rep = rep(c("I"))
 yield = c(22,32,35,55,44,40,60,39)
 
 cutting.speed.short = data.frame(A, B, C, Rep, yield)
+<<<<<<< HEAD
 >>>>>>> fb351768fbe95f6bdf6c42fd5024e4262cac5c48
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 
 # defining coded
 coded=function(x) #a function to code variable x
@@ -117,10 +123,13 @@ coded=function(x) #a function to code variable x
   ifelse(x=="+", 1, -1)
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```
 
 =======
 
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 for (j in 1:3)
   cutting.speed.short[, j]=as.numeric(coded(cutting.speed.short[, j]))
 
@@ -153,7 +162,11 @@ plot(fitted(cutting.lm_7.4_Re), res) #better model
 ```
 
 We begin by Blocing our main effects and we take a look at the coefficients of our model that includes blocking and the model that excludes blocking. Notice all coefficients are similar. To check if the model that includes the blocked data is a good model we quickly do a residual analysis and realize that our residuals are trending to a straight line, we do not have a good model, we must reduce it. Using the same method from chapter six, the probability plot, we have chosen main effects B, C, and interaction effects AC to be important effects. We apply this to a new model and check the residuals, no pattern and normality is well. The model with the Block Design data and main effects B, C, and interaction effect AC is a good model. 
+<<<<<<< HEAD
 >>>>>>> fb351768fbe95f6bdf6c42fd5024e4262cac5c48
+=======
+
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 
 ##7.13
 
@@ -210,6 +223,7 @@ Calculate the factor effect estimates. Construct the analysis of
 variance table.}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```{r}
 # creating data table
 factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
@@ -220,6 +234,8 @@ yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,4
 
 cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
 =======
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 ```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 # creating data table
 A = rep(c("-","+","-","+","-","+","-","+"), times = 3)
@@ -229,6 +245,7 @@ Rep = rep(c("I", "II", "III"), each = 8)
 yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
 #dataframe
 cutting.speed.long = data.frame(A, B, C, Rep, yield)
+<<<<<<< HEAD
 >>>>>>> 23807892c44c15367c81ffc1abc7f37b3c1df458
 
 # defining coded
@@ -283,6 +300,8 @@ summary(p.confound.lm)
 ```
 
 =======
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 # coding A and B
 #for (j in 1:3)
  # cutting.speed.long[, j]=as.numeric(coded(cutting.speed.long[, j]))
@@ -322,7 +341,10 @@ plot(fitted(cutting.confounded.lm), res)#Good Model
 ```
 
 After confounding certain main effect cominations to an assigned Replicate, we analyze the ANOVA our confounded data has to offer. Main effects B, C, and interaction effect AC are significant. We quickly build a model and check our residuals and see that normality is good and residuals are random. Our model is good. 
+<<<<<<< HEAD
 >>>>>>> 23807892c44c15367c81ffc1abc7f37b3c1df458
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 
 ##7.25
 
@@ -330,6 +352,7 @@ After confounding certain main effect cominations to an assigned Replicate, we a
 ABC was confounded with blocks in each replicate.}
 
 ```{r}
+<<<<<<< HEAD
 # creating data table
 <<<<<<< HEAD
 factorA = rep(c("-","+","-","+","-","+","-","+"), times = 3)
@@ -340,6 +363,8 @@ yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,4
 
 cutting.speed.long = data.frame(factorA, factorB, factorC, Rep, yield)
 =======
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 A = rep(c("-","+","-","+","-","+","-","+"), times = 3)
 B = rep(c("-","-","+","+","-","-","+","+"), times = 3)
 C = rep(c("-","-","-","-","+","+","+","+"), times = 3)
@@ -347,7 +372,10 @@ Rep = rep(c(1, 2, 3), each = 8)
 yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
 #dataframe
 cutting.speed.long = data.frame(A, B, C, Rep, yield)
+<<<<<<< HEAD
 >>>>>>> 23807892c44c15367c81ffc1abc7f37b3c1df458
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 
 # defining coded
 coded=function(x) #a function to code variable x
@@ -355,7 +383,10 @@ coded=function(x) #a function to code variable x
   ifelse(x=="+", 1, -1)
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 # coding A and B
 #for (j in 1:3)
  # cutting.speed.long[, j]=as.numeric(coded(cutting.speed.long[, j]))
@@ -394,5 +425,8 @@ cutting.confoundedabc.lm = lm(yield ~ Blocks + A * B * C, partialConfounding.abc
 res=partialConfounding.abc$yield-fitted(cutting.confoundedabc.lm)
 qqPlot(res)
 plot(fitted(cutting.confoundedabc.lm), res)#Good Model
+<<<<<<< HEAD
 >>>>>>> 23807892c44c15367c81ffc1abc7f37b3c1df458
+=======
+>>>>>>> e5c5dd69b9e637884c27c5c0fe8c8b3b929de8db
 ```
