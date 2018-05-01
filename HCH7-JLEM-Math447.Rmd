@@ -104,7 +104,6 @@ coded=function(x) #a function to code variable x
 {
   ifelse(x=="+", 1, -1)
 }
-
 for (j in 1:3)
   cutting.speed.short[, j]=as.numeric(coded(cutting.speed.short[, j]))
 
@@ -137,6 +136,7 @@ plot(fitted(cutting.lm_7.4_Re), res) #better model
 ```
 
 We begin by Blocing our main effects and we take a look at the coefficients of our model that includes blocking and the model that excludes blocking. Notice all coefficients are similar. To check if the model that includes the blocked data is a good model we quickly do a residual analysis and realize that our residuals are trending to a straight line, we do not have a good model, we must reduce it. Using the same method from chapter six, the probability plot, we have chosen main effects B, C, and interaction effects AC to be important effects. We apply this to a new model and check the residuals, no pattern and normality is well. The model with the Block Design data and main effects B, C, and interaction effect AC is a good model. 
+
 
 ##7.13
 
@@ -201,12 +201,6 @@ Rep = rep(c("I", "II", "III"), each = 8)
 yield = c(22,32,35,55,44,40,60,39,31,43,34,47,45,37,50,41,25,29,50,46,38,36,54,47)
 #dataframe
 cutting.speed.long = data.frame(A, B, C, Rep, yield)
-
-# defining coded
-coded=function(x) #a function to code variable x
-{
-  ifelse(x=="+", 1, -1)
-}
 # coding A and B
 #for (j in 1:3)
  # cutting.speed.long[, j]=as.numeric(coded(cutting.speed.long[, j]))
@@ -253,7 +247,6 @@ After confounding certain main effect cominations to an assigned Replicate, we a
 ABC was confounded with blocks in each replicate.}
 
 ```{r}
-# creating data table
 A = rep(c("-","+","-","+","-","+","-","+"), times = 3)
 B = rep(c("-","-","+","+","-","-","+","+"), times = 3)
 C = rep(c("-","-","-","-","+","+","+","+"), times = 3)
