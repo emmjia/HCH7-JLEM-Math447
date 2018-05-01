@@ -307,4 +307,12 @@ cutting.confoundedabc.lm = lm(yield ~ Blocks + A * B * C, partialConfounding.abc
 res=partialConfounding.abc$yield-fitted(cutting.confoundedabc.lm)
 qqPlot(res)
 plot(fitted(cutting.confoundedabc.lm), res)#Good Model
+
+# test stuff
+partialConfounding.abc$A <-coded(partialConfounding.abc$A)
+partialConfounding.abc$B <-coded(partialConfounding.abc$B)
+partialConfounding.abc$C <-coded(partialConfounding.abc$C)
+
+partialConfounding.abc$Block2 <- ifelse(partialConfounding.abc$A * partialConfounding.abc$B * partialConfounding.abc$C < 0, 1, 2)
+summary(aov(yield ~ Block + A * B * C, partialConfounding.abc))
 ```
