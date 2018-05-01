@@ -253,7 +253,7 @@ After confounding certain main effect cominations to an assigned Replicate, we a
 \textbf{Repeat the analysis of Problem 6.1 assuming that
 ABC was confounded with blocks in each replicate.}
 
-```{r}
+```{r,out.width='.49\\linewidth', fig.width=3, fig.height=3}
 # creating data table
 A = rep(c("-","+","-","+","-","+","-","+"), times = 3)
 B = rep(c("-","-","+","+","-","-","+","+"), times = 3)
@@ -308,3 +308,5 @@ res=partialConfounding.abc$yield-fitted(cutting.confoundedabc.lm)
 qqPlot(res)
 plot(fitted(cutting.confoundedabc.lm), res)#Good Model
 ```
+
+Partially confounding is identical to fully confounding when using both methods.  the anova for partially confounding and checking the residuals we have a good model
