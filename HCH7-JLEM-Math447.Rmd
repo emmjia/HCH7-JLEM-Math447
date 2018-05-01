@@ -315,4 +315,6 @@ partialConfounding.abc$C <-coded(partialConfounding.abc$C)
 
 partialConfounding.abc$Block2 <- ifelse(partialConfounding.abc$A * partialConfounding.abc$B * partialConfounding.abc$C < 0, 1, 2)
 summary(aov(yield ~ Block + A * B * C, partialConfounding.abc))
+
+partialConfounding.abc$Block == partialConfounding.abc$Block2
 ```
